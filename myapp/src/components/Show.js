@@ -3,6 +3,36 @@ import React from "react";
 
 const Show = (props) => {
   const { results, info } = props;
+  console.log(results);
+  const handleclick=async ()=>{
+    try{
+      const res=await fetch("http://localhost:3070/results", {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body:JSON.stringify(results) 
+       // body data type must match "Content-Type" header
+      });
+      
+      const data = await res.json();
+      console.log(data)
+   
+
+    }
+    catch(e){
+      console.log(e)
+
+
+    }
+    
+  }
   const handlePost = async (urlpath) => {
     await fetch("http://localhost:3070", {
       method: 'POST',
@@ -27,6 +57,7 @@ const Show = (props) => {
       <div className="show__info">
         {info ? `Total results: ${info.totalResults}` : ""}
       </div>
+      {/* <button onClick={handleclick}>ok</button> */}
       {results.length > 0
         ? results.map((result) => (
           <div className="show__details">

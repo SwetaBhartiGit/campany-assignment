@@ -7,35 +7,29 @@ import { FaSistrix, FaMicrophone } from "react-icons/fa";
 import axios from "axios";
 import Show from "./Show";
 const Search = (props) => {
-  //  console.log(useLocation())
+
     const data = useLocation();
 
   const [state, setState] = React.useState(
    data.state.searchName
-    // props.location.state ? props.location.state : ""
+    
   );
   const [results, setResults] = React.useState([]);
   const [info, setInfo] = React.useState("");
-  // console.log(props)
-  
+    
   console.log(data)
 
 
   const navigate = useNavigate();
 
   const goBack = () => {
-    // const navigate = useNavigate();
+
     navigate("/");
 
 
-    // props.history.push("/");
+
   };
-  // const [state, setState] = React.useState(
-  //   props.location.state ? props.location.state : ""
-  // );
-  // const [results, setResults] = React.useState([]);
-  // const [info, setInfo] = React.useState("");
-  const searchGoogle = async (e) => {
+const searchGoogle = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.get(
@@ -53,12 +47,15 @@ const Search = (props) => {
     async function getPosts() {
       if (state) {
         try {
-          const response = await axios.get(
-             `https://www.googleapis.com/customsearch/v1?key=${key}&cx=${cx}&q=${state}`
+          const response = await fetch(
+            "http://localhost:3070/results"
+            //  `https://www.googleapis.com/customsearch/v1?key=${key}&cx=${cx}&q=${state}`
           );
-          if (response) {
-            setResults(response.data.items);
-            setInfo(response.data.searchInformation);
+          const data = await response.json();
+          if (data) {
+            setResults(data);
+            // setInfo(response.data.searchInformation);
+            console.log(results)
           }
         } catch (error) {
           console.log(error);

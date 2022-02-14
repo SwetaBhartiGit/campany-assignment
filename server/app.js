@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 // const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const keyRoutes = require("./routes/keys");
+const resultsRoutes = require("./routes/results");
+
 mongoose.connect(
   "mongodb+srv://sweta:sweta@assignment.cs9x2.mongodb.net/Assignment-databases?retryWrites=true&w=majority"
 ).then(()=>{
@@ -16,4 +18,6 @@ app.use(cors());
 app.use(bodyParser());
 
 app.use("/", keyRoutes);
+app.use("/", resultsRoutes);
+
 app.listen("3070", console.log("Server listening to port 3070"));
